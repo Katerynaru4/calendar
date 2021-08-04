@@ -19,7 +19,5 @@ export const renderHeader = () => {
   displayDayNow();
 };
 
-// при клике на кнопку "Create" открыть модальное окно с формой для создания события
-// назначьте здесь обработчик
 const createEventBtn = document.querySelector('.create-event-btn');
 createEventBtn.addEventListener('click', () => openModal(new Date()));

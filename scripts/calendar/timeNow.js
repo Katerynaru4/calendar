@@ -1,9 +1,12 @@
 import { getItem } from '../common/storage.js';
 import { getStartOfWeek } from '../common/time.utils.js';
 
-const isDisplayedWeekNotPresent = () =>
-  getItem('displayedWeekStart').getTime() !=
-  getStartOfWeek(new Date()).getTime();
+function isDisplayedWeekNotPresent() {
+  return (
+    getItem('displayedWeekStart').getTime() !==
+    getStartOfWeek(new Date()).getTime()
+  );
+}
 
 export const displayTimeNow = () => {
   if (isDisplayedWeekNotPresent()) return;

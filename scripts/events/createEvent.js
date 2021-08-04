@@ -30,8 +30,9 @@ const isTimeGapWithinSixHours = (start, end) =>
 const toValidate = (start, end) => {
   return [isTimeGapCorrect(start, end), isTimeGapWithinSixHours(start, end)]
     .filter((el) => el)
-    .forEach((el) => {
+    .map((el) => {
       errorElem.textContent = el;
+      return el;
     });
 };
 
@@ -63,16 +64,6 @@ function onCreateEvent(event) {
   renderEvents();
 }
 
-// задача этой ф-ции только добавить новое событие в массив событий, что хранится в storage
-// создавать или менять DOM элементы здесь не нужно. Этим займутся другие ф-ции
-// при подтверждении формы нужно считать данные с формы
-// с формы вы получите поля date, startTime, endTime, title, description
-// на основе полей date, startTime, endTime нужно посчитать дату начала и окончания события
-// date, startTime, endTime - строки. Вам нужно с помощью getDateTime из утилит посчитать start и end объекта события
-// полученное событие добавляем в массив событий, что хранится в storage
-// закрываем форму
-// и запускаем перерисовку событий с помощью renderEvents
-
 export function initEventForm() {
   eventFormElem.addEventListener('submit', onCreateEvent);
   closeEventFormBtn.addEventListener('click', onCloseEventForm);
@@ -93,7 +84,3 @@ const openModalBySlot = (event) => {
 
 const weekElem = document.querySelector('.calendar__week');
 weekElem.addEventListener('click', openModalBySlot);
-
-//   Пользователь может добавить событие в календарь кликнув на нужную область дня.
-//   Например, при клике на ячейку 3 декабря 14:00-15:00, открывается
-//   pop-up с заполненными полями исходя из даты ячейки

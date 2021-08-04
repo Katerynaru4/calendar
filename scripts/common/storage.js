@@ -5,7 +5,6 @@ const storage = {
   displayedWeekStart: null,
   // хранит массив всех событий
   events: [],
-  // это все данные, которые вам нужно хранить для работы приложения
 };
 
 export const setItem = (key, value) => {
@@ -18,7 +17,7 @@ export const getItem = (key) => {
 
 // пример объекта события
 const eventExample = {
-  id: 0.7520027086457333, // id понадобится для работы с событиями
+  id: 0.7520027086457333, 
   title: 'Title',
   description: 'Some description',
   start: new Date('2020-03-17T01:10:00.000Z'),
