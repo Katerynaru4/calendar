@@ -4,19 +4,55 @@ import { renderHeader } from '../calendar/header.js';
 import { getStartOfWeek, getDisplayedMonth } from '../common/time.utils.js';
 
 const navElem = document.querySelector('.navigation');
-const displayedMonthElem = document.querySelector('.navigation__displayed-month');
+const displayedMonthElem = document.querySelector(
+  '.navigation__displayed-month'
+);
 
 function renderCurrentMonth() {
-    // отрисовать месяц, к которому относиться текущая неделя (getDisplayedMonth)
-    // вставить в .navigation__displayed-month
+  displayedMonthElem.textContent = getDisplayedMonth(
+    getItem('displayedWeekStart')
+  );
 }
+// отрисовать месяц, к которому относиться текущая неделя (getDisplayedMonth)
+// вставить в .navigation__displayed-month
 
-const onChangeWeek = event => {
-    // при переключении недели обновите displayedWeekStart в storage
-    // и перерисуйте все необходимые элементы страницы (renderHeader, renderWeek, renderCurrentMonth)
+const onChangeWeek = (event) => {
+  if (
+    !event.target.parentElement.dataset.direction &&
+    !event.target.dataset.direction
+  )
+    return;
+    
+  let changedDate;
+  const currentDate = getItem('displayedWeekStart');
+
+  if (event.target.closest('[data-direction=next]')) {
+    changedDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() + 7
+    );
+  }
+  if (event.target.closest('[data-direction=prev]')) {
+    changedDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() - 7
+    );
+  }
+
+  if (event.target.dataset.direction === 'today') {
+    changedDate = getStartOfWeek(new Date());
+  }
+  setItem('displayedWeekStart', changedDate);
+  renderHeader();
+  renderWeek();
+  renderCurrentMonth();
 };
+// при переключении недели обновите displayedWeekStart в storage
+// и перерисуйте все необходимые элементы страницы (renderHeader, renderWeek, renderCurrentMonth)
 
 export const initNavigation = () => {
-    renderCurrentMonth();
-    navElem.addEventListener('click', onChangeWeek);
+  renderCurrentMonth();
+  navElem.addEventListener('click', onChangeWeek);
 };

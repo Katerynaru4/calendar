@@ -1,1 +1,16 @@
-// стили отображаемого в календаре события
+.event {
+  background-color: #26a69a;
+  position: absolute;
+  width: 90%;
+  padding: 0 8px;
+  border-radius: 8px;
+  padding: 5px;
+  &__title {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+
+  &__time {
+    font-size: 13px;
+  }
+}
