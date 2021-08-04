@@ -19,6 +19,7 @@ export const openModal = (defaultDate) => {
 
   let hours = defaultDate.getHours();
   let minutes = defaultDate.getMinutes();
+
   if (minutes > 45) {
     hours += 1;
     minutes = 0;
@@ -26,15 +27,21 @@ export const openModal = (defaultDate) => {
   if (minutes % 15 !== 0) {
     minutes = Math.round(minutes / 10) * 15;
   }
-  if (minutes === 45) {
-    hours +=1;
-  }
-  hours = hours.toString().padStart(2, '0');
-  const startMinutes = minutes.toString().padStart(2, '0');
-  const endMinutes = (minutes + 15).toString().padStart(2, '0');
 
-  timeStartElem.value = `${hours}:${startMinutes}`;
-  timeEndElem.value = `${hours}:${endMinutes}`;
+  let startMinutes = minutes.toString().padStart(2, '0');
+  let endMinutes = (minutes + 15).toString().padStart(2, '0');
+
+  const startHours = hours.toString().padStart(2, '0');
+  let endHours = hours.toString().padStart(2, '0');
+
+  if (minutes === 45) {
+    startMinutes = minutes.toString().padStart(2, '0');
+    endMinutes = (0).toString().padStart(2, '0');
+    endHours = (hours + 1).toString().padStart(2, '0');
+  }
+
+  timeStartElem.value = `${startHours}:${startMinutes}`;
+  timeEndElem.value = `${endHours}:${endMinutes}`;
 
   modalElem.style.display = 'flex';
 };
