@@ -9,9 +9,9 @@ const errorElem = document.querySelector('.event-form__time-error');
 
 function clearEventForm() {
   errorElem.textContent = '';
-  document
-    .querySelectorAll('.event-form__field')
-    .forEach((el) => (el.value = ''));
+  document.querySelectorAll('.event-form__field').forEach((el) => {
+    el.value = '';
+  });
 }
 
 function onCloseEventForm() {
@@ -30,7 +30,9 @@ const isTimeGapWithinSixHours = (start, end) =>
 const toValidate = (start, end) => {
   return [isTimeGapCorrect(start, end), isTimeGapWithinSixHours(start, end)]
     .filter((el) => el)
-    .map((el) => (errorElem.textContent = el));
+    .forEach((el) => {
+      errorElem.textContent = el;
+    });
 };
 
 function onCreateEvent(event) {

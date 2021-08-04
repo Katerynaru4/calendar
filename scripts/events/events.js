@@ -70,7 +70,7 @@ export const renderEvents = () => {
       (event) =>
         getStartOfWeek(event.end).getDate() === displayedWeekStart.getDate()
     )
-    .map((event) => {
+    .forEach((event) => {
       const selectedTimeSlotElem = document
         .querySelector(`.calendar__day[data-day="${event.start.getDate()}"]`)
         .querySelector(

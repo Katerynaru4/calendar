@@ -13,7 +13,7 @@ export const renderHeader = () => {
     .map((el) => `<div class="calendar__day-label day-label"  data-day="${el.getDate()}">
               <span class="day-label__day-name">${daysOfWeek[el.getDay()]}</span>
               <span class="day-label__day-number">${el.getDate()}</span>
-            </div>`
+                </div>`
     )
     .join('');
   displayDayNow();
