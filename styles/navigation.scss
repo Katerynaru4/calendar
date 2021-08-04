@@ -1,1 +1,13 @@
-// стили навигации
+.navigation {
+  &__today-btn {
+    margin-right: 20px;
+    width: 70px;
+    background-color: transparent;
+  }
+  &__nav-icon {
+    margin: 0 8px;
+  }
+  &__displayed-month {
+    margin-left: 10px;
+  }
+}

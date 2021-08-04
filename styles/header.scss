@@ -1,63 +1,20 @@
 .header {
-  display: flex;
   margin: 10px 0;
+  display: flex;
   border-bottom: 1px solid grey;
   padding-bottom: 10px;
-}
-.header {
-}
-.button {
-}
-.today > .day-label__day-name {
-  color: #26a69a;
-}
-.today > .day-label__day-number {
-  color: white;
-  background-color: #26a69a;
-  height: 30px;
-  width: 30px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  justify-content: center;
 }
 .create-event-btn {
   margin-right: 30px;
   width: 100px;
-  background-color: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
+  background-color: transparent;
   border-radius: 30px;
   box-shadow: 2px 4px 2px 1px rgb(34 60 80 / 14%);
+  padding: 0 15px;
   &__icon {
     color: grey;
   }
-}
-.fas {
-}
-.fa-plus {
-}
-.navigation {
-  &__today-btn {
-    width: 70px;
-    background-color: transparent;
-    margin-right: 20px;
-  }
-
-  &__nav-icon {
-    margin: 0 8px;
-  }
-
-  &__displayed-month {
-    margin-left: 10px;
-  }
-}
-.icon-button {
-}
-.fa-chevron-left {
-}
-.fa-chevron-right {
 }

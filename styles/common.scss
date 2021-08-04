@@ -23,9 +23,9 @@
 
   &__content {
     background: #fff;
-    padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    padding: 16px;
   }
 }
 
@@ -43,11 +43,11 @@
   &__content {
     position: absolute;
     background: #fff;
-    padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
     display: flex;
     align-items: center;
+    padding: 16px;
     i {
       margin-right: 10px;
     }

@@ -6,8 +6,8 @@ const modalElem = document.querySelector('.modal');
 
 export const openModal = (defaultDate) => {
   const dateInputElem = document.querySelector('.event-form__date');
-  let month = (defaultDate.getMonth() + 1).toString().padStart(2, '0');
-  let date = defaultDate.getDate().toString().padStart(2, '0');
+  const month = (defaultDate.getMonth() + 1).toString().padStart(2, '0');
+  const date = defaultDate.getDate().toString().padStart(2, '0');
   dateInputElem.value = `${defaultDate.getFullYear()}-${month}-${date}`;
 
   const timeStartElem = document.querySelector(
@@ -25,6 +25,9 @@ export const openModal = (defaultDate) => {
   }
   if (minutes % 15 !== 0) {
     minutes = Math.round(minutes / 10) * 15;
+  }
+  if (minutes === 45) {
+    hours +=1;
   }
   hours = hours.toString().padStart(2, '0');
   const startMinutes = minutes.toString().padStart(2, '0');

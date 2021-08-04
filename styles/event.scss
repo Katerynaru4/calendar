@@ -1,15 +1,14 @@
 .event {
-  background-color: #26a69a;
   position: absolute;
   width: 90%;
-  padding: 0 8px;
+  background-color: #26a69a;
   border-radius: 8px;
   padding: 5px;
-  &__title {
-    font-size: 15px;
-    margin-bottom: 5px;
-  }
 
+  &__title {
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
   &__time {
     font-size: 13px;
   }

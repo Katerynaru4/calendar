@@ -33,9 +33,9 @@
 }
 .modal__content {
   background: #fff;
-  padding: 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  padding: 16px;
 }
 
 .overlay {
@@ -51,11 +51,11 @@
 .popup__content {
   position: absolute;
   background: #fff;
-  padding: 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
   display: flex;
   align-items: center;
+  padding: 16px;
 }
 .popup__content i {
   margin-right: 10px;
@@ -75,47 +75,31 @@
 }
 
 .header {
-  display: flex;
   margin: 10px 0;
+  display: flex;
   border-bottom: 1px solid grey;
   padding-bottom: 10px;
-}
-
-.today > .day-label__day-name {
-  color: #26a69a;
-}
-
-.today > .day-label__day-number {
-  color: white;
-  background-color: #26a69a;
-  height: 30px;
-  width: 30px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  justify-content: center;
 }
 
 .create-event-btn {
   margin-right: 30px;
   width: 100px;
-  background-color: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
+  background-color: transparent;
   border-radius: 30px;
   box-shadow: 2px 4px 2px 1px rgba(34, 60, 80, 0.14);
+  padding: 0 15px;
 }
 .create-event-btn__icon {
   color: grey;
 }
 
 .navigation__today-btn {
+  margin-right: 20px;
   width: 70px;
   background-color: transparent;
-  margin-right: 20px;
 }
 .navigation__nav-icon {
   margin: 0 8px;
@@ -129,9 +113,9 @@
   overflow-y: auto;
 }
 .calendar__header {
+  margin-left: 50px;
   height: 100px;
   display: flex;
-  margin-left: 50px;
 }
 .calendar____day-label {
   height: 100px;
@@ -155,39 +139,58 @@
   flex-grow: 1;
 }
 .calendar__time-slot {
+  position: relative;
   height: 60px;
   border: 1px solid black;
-  position: relative;
 }
 .calendar__line-now {
-  display: block;
+  position: relative;
   width: 100%;
   height: 2px;
+  display: block;
   background-color: red;
-  position: relative;
 }
 .calendar__line-now::before {
   content: "";
-  background-color: red;
+  width: 14px;
+  height: 14px;
   position: absolute;
   top: -6px;
   left: -8px;
-  width: 14px;
-  height: 14px;
   border-radius: 25px;
+  background-color: red;
 }
 
 .day-label {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   line-height: 50px;
   color: black;
-  flex-grow: 1;
 }
-
 .day-label__day-name {
   text-transform: uppercase;
+}
+
+.today > .day-label__day-name {
+  color: #26a69a;
+}
+
+.today > .day-label__day-number {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  color: white;
+  background-color: #26a69a;
+  border-radius: 30px;
+}
+
+.calendar__time-scale::before {
+  content: "";
 }
 
 .time-slot {
@@ -195,15 +198,11 @@
   height: 60px;
   width: 50px;
 }
-.calendar__time-scale::before {
-  content: "";
-}
-
 .time-slot__time {
-  font-size: 13px;
   position: absolute;
   right: 8px;
   top: -6px;
+  font-size: 13px;
 }
 
 .modal__content {
@@ -221,7 +220,6 @@
   background-color: transparent;
 }
 .create-event__close-btn i {
-  color: grey;
   font-size: 20px;
 }
 
@@ -237,17 +235,17 @@
   border: none;
 }
 .event-form__input {
-  width: 260px;
   margin-top: 12px;
   margin-left: 22px;
+  width: 260px;
   outline: none;
   border: none;
   border-bottom: 2px solid #26a69a;
   padding: 6px;
 }
 .event-form__date {
-  width: 124px;
   margin-right: 20px;
+  width: 124px;
   height: 30px;
   font-size: 14px;
 }
@@ -257,53 +255,52 @@
   width: 80px;
 }
 .event-form__time-error {
-  font-size: 11px;
-  color: red;
   margin-left: 100px;
   margin-top: -36px;
+  font-size: 11px;
+  color: red;
 }
 .event-form__description-block {
   display: flex;
 }
 .event-form__description {
-  border: none;
-  padding: 5px;
-  outline: none;
-  font-size: 16px;
   margin-left: 40px;
   width: 234px;
+  border: none;
+  outline: none;
+  font-size: 16px;
   resize: none;
+  padding: 5px;
 }
 .event-form__time {
   display: flex;
-  font-size: 14px;
   height: 30px;
+  font-size: 14px;
   padding-left: 5px;
 }
 .event-form__submit-btn {
-  width: 120px;
   margin-left: auto;
+  width: 120px;
   background-color: #26a69a;
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 6px 19px;
   outline: none;
   font-size: 15px;
   line-height: 16px;
+  padding: 6px 19px;
 }
 
 .event {
-  background-color: #26a69a;
   position: absolute;
   width: 90%;
-  padding: 0 8px;
+  background-color: #26a69a;
   border-radius: 8px;
   padding: 5px;
 }
 .event__title {
-  font-size: 15px;
   margin-bottom: 5px;
+  font-size: 15px;
 }
 .event__time {
   font-size: 13px;

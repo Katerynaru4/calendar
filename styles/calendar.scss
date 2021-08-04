@@ -4,9 +4,9 @@
   min-width: 700px;
   overflow-y: auto;
   &__header {
+    margin-left: 50px;
     height: 100px;
     display: flex;
-    margin-left: 50px;
   }
   &____day-label {
     height: 100px;
@@ -35,46 +35,54 @@
   }
 
   &__time-slot {
+    position: relative;
     height: 60px;
     border: 1px solid black;
-    position: relative;
   }
+
   &__line-now {
-    display: block;
+    position: relative;
     width: 100%;
     height: 2px;
+    display: block;
     background-color: red;
-    position: relative;
+
     &::before {
       content: '';
-      background-color: red;
+      width: 14px;
+      height: 14px;
       position: absolute;
       top: -6px;
       left: -8px;
-      width: 14px;
-      height: 14px;
       border-radius: 25px;
+      background-color: red;
     }
   }
 }
 
 .day-label {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   line-height: 50px;
   color: black;
-  flex-grow: 1;
-}
-.day-label__day-name {
-  text-transform: uppercase;
-}
-.day-label__day-number {
-}
-.time-slot {
-  position: relative;
-  height: 60px;
-  width: 50px;
-  &__time {
+
+  &__day-name {
+    text-transform: uppercase;
   }
+}
+.today > .day-label__day-name {
+  color: #26a69a;
+}
+.today > .day-label__day-number {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  color: white;
+  background-color: #26a69a;
+  border-radius: 30px;
 }
