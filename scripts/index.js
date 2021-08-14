@@ -4,7 +4,7 @@ import { renderHeader } from './calendar/header.js';
 import { initNavigation, renderCurrentMonth } from './header/navigation.js';
 import { setItem, getItem } from './common/storage.js';
 import { displayTimeNow } from './calendar/timeNow.js';
-import { getStartOfWeek, getDisplayedMonth } from './common/time.utils.js';
+import { getStartOfWeek } from './common/time.utils.js';
 import { initEventForm } from './events/createEvent.js';
 import { renderEvents } from './events/events.js';
 import { initDeleteEvents } from './events/events.js';
