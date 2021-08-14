@@ -1,7 +1,12 @@
 import { getItem, setItem } from '../common/storage.js';
 import { openPopup, closePopup } from '../common/popup.js';
 import { getStartOfWeek } from '../common/time.utils.js';
-import { renderWeek } from '../calendar/calendar.js';
+
+
+ const removeEventsFromCalendar = () => {
+  document.querySelectorAll('.event').forEach((e) => e.remove());
+};
+
 
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.delete-event-btn');
@@ -45,10 +50,14 @@ const createEventElement = (event) => {
   const diffTime = (endDate - startDate) / (1000 * 60);
   eventElem.style.height = `${diffTime}px`;
   eventElem.style.top = `${startDate.getMinutes()}px`;
+  const colorEvents = getItem('eventsColor');
+  eventElem.style.backgroundColor = colorEvents;
   return eventElem;
 };
 
 export const renderEvents = () => {
+    removeEventsFromCalendar();
+
   const eventsArray = getItem('events');
   const displayedWeekStart = new Date(getItem('displayedWeekStart'));
 
@@ -71,10 +80,6 @@ export const renderEvents = () => {
     });
 };
 
-export const removeEventsFromCalendar = () => {
-  document.querySelectorAll('.event').forEach((e) => e.remove());
-};
-
 const isTimeToDelete = (eventStartDate) =>
   Math.abs(eventStartDate - new Date()) > 15 * 60 * 1000;
 
@@ -90,7 +95,6 @@ function onDeleteEvent() {
     return true;
   });
 
-  removeEventsFromCalendar();
   setItem('events', filteredEventsArray);
   setItem('eventIdToDelete', null);
   closePopup();

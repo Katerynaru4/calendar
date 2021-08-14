@@ -14,61 +14,64 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="page">
-    <header class="header">
-        <button class="button create-event-btn"><i class="fas fa-plus create-event-btn__icon"></i>Create</button>
-        <div class="navigation">
-            <button data-direction="today" class="navigation__today-btn button">Today</button>
-            <button data-direction="prev" class="icon-button navigation__nav-icon">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button data-direction="next" class="icon-button navigation__nav-icon">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            <span class="navigation__displayed-month">Jun - Jul 2019</span>
-        </div>
-    </header>
-    <section class="calendar">
-        <header class="calendar__header">
+<body >
+    <div class="page">
+        <header class="header">
+            <button class="button create-event-btn"><i class="fas fa-plus create-event-btn__icon"></i>Create</button>
+            <div class="navigation">
+                <button data-direction="today" class="navigation__today-btn button">Today</button>
+                <button data-direction="prev" class="icon-button navigation__nav-icon">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button data-direction="next" class="icon-button navigation__nav-icon">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <span class="navigation__displayed-month"></span>
+            </div>
+            <button class="button settings-open-btn">Settings</button>
         </header>
-        <div class="calendar__body">
-            <div class="calendar__week-container">
-                <div class="calendar__time-scale">
-                </div>
-                <div class="calendar__week">
+        <section class="calendar">
+            <header class="calendar__header">
+            </header>
+            <div class="calendar__body">
+                <div class="calendar__week-container">
+                    <div class="calendar__time-scale">
+                    </div>
+                    <div class="calendar__week">
 
+                    </div>
                 </div>
             </div>
+        </section>
+        <div class="modal hidden overlay">
+            <div class="modal__content">
+                <div class="create-event">
+                    <button class="create-event__close-btn"><i class="material-icons">close</i></button>
+                    <form class="event-form">
+                        <input type="text" name="title" placeholder="Title" class="event-form__field input-field col s6 event-form__input" required/>
+                        <div class="event-form__time-block">
+                            <input type="date" name="date" class="event-form__field  event-form__date" />
+                            <input type="time" step="900" name="startTime" class="event-form__field  event-form__time " />
+                            <span>-</span>
+                            <input type="time" step="900" name="endTime" class="event-form__field event-form__time " />
+                        </div>
+                        <span class="event-form__time-error"></span>
+                        <div class="event-form__description-block">
+                        <span class="material-icons">short_text</span>
+                        <textarea name="description" placeholder="Description" class="event-form__field event-form__description"></textarea>
+                        </div>
+                        <button type="submit" class="event-form__submit-btn btn-small">Create</button>
+                    </form>
+                </div> 
+            </div>
         </div>
-    </section>
-    <div class="modal hidden overlay">
-        <div class="modal__content">
-            <div class="create-event">
-                <button class="create-event__close-btn"><i class="material-icons">close</i></button>
-                <form class="event-form">
-                    <input type="text" name="title" placeholder="Title" class="event-form__field input-field col s6 event-form__input" required/>
-                    <div class="event-form__time-block">
-                        <input type="date" name="date" class="event-form__field  event-form__date" />
-                        <input type="time" step="900" name="startTime" class="event-form__field  event-form__time " />
-                        <span>-</span>
-                        <input type="time" step="900" name="endTime" class="event-form__field event-form__time " />
-                    </div>
-                    <span class="event-form__time-error"></span>
-                    <div class="event-form__description-block">
-                    <span class="material-icons">short_text</span>
-                    <textarea name="description" placeholder="Description" class="event-form__field event-form__description"></textarea>
-                    </div>
-                    <button type="submit" class="event-form__submit-btn btn-small">Create</button>
-                </form>
-            </div> 
-         </div>
-    </div>
-    <div class="popup hidden overlay">
-        <div class="popup__overlay"></div>
-        <div class="popup__content">
-            <i class="material-icons">delete</i>
-            <button class="delete-event-btn">Delete</button>
-        </div>
+        <div class="popup hidden overlay">
+            <div class="popup__overlay"></div>
+            <div class="popup__content">
+                <i class="material-icons">delete</i>
+                <button class="delete-event-btn">Delete</button>
+            </div>
+            </div>
         </div>
     </div>
     <script src="scripts/index.js" type="module"></script>

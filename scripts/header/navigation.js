@@ -8,11 +8,11 @@ const displayedMonthElem = document.querySelector(
   '.navigation__displayed-month'
 );
 
-function renderCurrentMonth() {
+export const renderCurrentMonth = () => {
   displayedMonthElem.textContent = getDisplayedMonth(
     getItem('displayedWeekStart')
   );
-}
+};
 
 const onChangeWeek = (event) => {
   if (
