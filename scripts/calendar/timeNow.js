@@ -3,7 +3,7 @@ import { getStartOfWeek } from '../common/time.utils.js';
 
 function isDisplayedWeekNotPresent() {
   return (
-    getItem('displayedWeekStart').getTime() !==
+    new Date(getItem('displayedWeekStart')).getTime() !==
     getStartOfWeek(new Date()).getTime()
   );
 }

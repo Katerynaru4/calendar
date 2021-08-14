@@ -22,7 +22,7 @@ const onChangeWeek = (event) => {
     return;
 
   let changedDate;
-  const currentDate = getItem('displayedWeekStart');
+  const currentDate = new Date(getItem('displayedWeekStart'));
 
   if (event.target.closest('[data-direction=next]')) {
     changedDate = new Date(currentDate.setDate(currentDate.getDate() + 7));

@@ -1,6 +1,7 @@
 import { getItem, setItem } from '../common/storage.js';
 import { openPopup, closePopup } from '../common/popup.js';
 import { getStartOfWeek } from '../common/time.utils.js';
+import { renderWeek } from '../calendar/calendar.js';
 
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.delete-event-btn');
@@ -34,27 +35,22 @@ const createEventElement = (event) => {
 
   const eventTimeElem = document.createElement('div');
   eventTimeElem.classList.add('event__time');
-  eventTimeElem.textContent = toInsertTime(event.start, event.end);
+  const startDate = new Date(event.start);
+  const endDate = new Date(event.end);
+  eventTimeElem.textContent = toInsertTime(startDate, endDate);
 
   eventElem.appendChild(eventTitleElem);
   eventElem.appendChild(eventTimeElem);
 
-  const diffTime = (event.end - event.start) / (1000 * 60);
+  const diffTime = (endDate - startDate) / (1000 * 60);
   eventElem.style.height = `${diffTime}px`;
-  eventElem.style.top = `${event.start.getMinutes()}px`;
+  eventElem.style.top = `${startDate.getMinutes()}px`;
   return eventElem;
 };
 
 export const renderEvents = () => {
   const eventsArray = getItem('events');
-  const displayedWeekStart = getItem('displayedWeekStart');
-
-  eventsArray.forEach((event) => {
-    const selectedTimeSlotElem = document.querySelector(
-      `.calendar__time-slot[data-time="${event.start.getHours()}"]`
-    );
-    selectedTimeSlotElem.innerHTML = '';
-  });
+  const displayedWeekStart = new Date(getItem('displayedWeekStart'));
 
   eventsArray
     .filter(
@@ -63,39 +59,45 @@ export const renderEvents = () => {
     )
     .forEach((event) => {
       const selectedTimeSlotElem = document
-        .querySelector(`.calendar__day[data-day="${event.start.getDate()}"]`)
         .querySelector(
-          `.calendar__time-slot[data-time="${event.start.getHours()}"]`
+          `.calendar__day[data-day="${new Date(event.start).getDate()}"]`
+        )
+        .querySelector(
+          `.calendar__time-slot[data-time="${new Date(
+            event.start
+          ).getHours()}"]`
         );
       selectedTimeSlotElem.appendChild(createEventElement(event));
     });
 };
 
-function removeEventsFromCalendar() {
-  setItem('events', null);
-  renderEvents();
-}
+export const removeEventsFromCalendar = () => {
+  document.querySelectorAll('.event').forEach((e) => e.remove());
+};
 
-const isTimeToDelete = (id) =>
-  getItem('events').find((event) => event.id === id).start - new Date() <
-  15 * 60 * 1000;
+const isTimeToDelete = (eventStartDate) =>
+  Math.abs(eventStartDate - new Date()) > 15 * 60 * 1000;
 
 function onDeleteEvent() {
   const filteredEventsArray = getItem('events').filter((event) => {
-    if (event.id === +getItem('eventIdToDelete') && isTimeToDelete(event.id)) {
-      const selectedTimeSlotElem = document
-        .querySelector(`.calendar__day[data-day="${event.start.getDate()}"]`)
-        .querySelector(
-          `.calendar__time-slot[data-time="${event.start.getHours()}"]`
-        );
-      selectedTimeSlotElem.innerHTML = '';
+    const eventStartDate = new Date(event.start);
+    if (
+      event.id === +getItem('eventIdToDelete') &&
+      isTimeToDelete(eventStartDate)
+    ) {
+      return false;
     }
-    return event.id !== +getItem('eventIdToDelete');
+    return true;
   });
+
+  removeEventsFromCalendar();
   setItem('events', filteredEventsArray);
+  setItem('eventIdToDelete', null);
   closePopup();
   renderEvents();
 }
 
-deleteEventBtn.addEventListener('click', onDeleteEvent);
-weekElem.addEventListener('click', handleEventClick);
+export function initDeleteEvents() {
+  deleteEventBtn.addEventListener('click', onDeleteEvent);
+  weekElem.addEventListener('click', handleEventClick);
+}

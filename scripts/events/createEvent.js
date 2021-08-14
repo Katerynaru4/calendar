@@ -1,4 +1,4 @@
-import { getItem } from '../common/storage.js';
+import { getItem, setItem } from '../common/storage.js';
 import { renderEvents } from './events.js';
 import { getDateTime } from '../common/time.utils.js';
 import { closeModal, openModal } from '../common/modal.js';
@@ -58,9 +58,11 @@ function onCreateEvent(event) {
     start: new Date(`${formData.date}T${formData.startTime}`),
     end: new Date(`${formData.date}T${formData.endTime}`),
   };
+  const events = getItem('events');
+  events.push(eventToAdd);
+  setItem('events', events);
 
-  getItem('events').push(eventToAdd);
-  closeModal();
+  onCloseEventForm()
   renderEvents();
 }
 
@@ -72,12 +74,14 @@ export function initEventForm() {
 const openModalBySlot = (event) => {
   if (event.target.className !== 'calendar__time-slot') return;
 
+  const weekStartDate = new Date(getItem('displayedWeekStart'));
+
   const hours = `${event.target.dataset.time.toString().padStart(2, '0')}:00`;
   const date = `${event.target
     .closest('.calendar__day')
     .dataset.day.padStart(2, '0')}`;
-  const month = getItem('displayedWeekStart').getMonth() + 1;
-  const year = getItem('displayedWeekStart').getFullYear();
+  const month = weekStartDate.getMonth() + 1;
+  const year = weekStartDate.getFullYear();
 
   openModal(new Date(`${year} ${month} ${date} ${hours}`));
 };
