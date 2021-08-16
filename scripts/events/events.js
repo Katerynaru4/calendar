@@ -7,7 +7,6 @@ import { getStartOfWeek } from '../common/time.utils.js';
   document.querySelectorAll('.event').forEach((e) => e.remove());
 };
 
-
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.delete-event-btn');
 

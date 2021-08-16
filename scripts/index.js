@@ -18,12 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   setItem('eventsColor', getItem('eventsColor') || 'blue');
   setItem('events', getItem('events') || []);
-  initSettings();
   renderWeek();
   renderHeader();
   initNavigation();
+  initSettings();
   initEventForm();
-  renderEvents();
   initDeleteEvents();
   displayTimeNow();
 });
