@@ -17,10 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
     getItem('displayedWeekStart') || getStartOfWeek(new Date())
   );
   setItem('eventsColor', getItem('eventsColor') || 'blue');
-  initSettings();
+  setItem('events', getItem('events') || []);
   renderWeek();
   renderHeader();
   initNavigation();
+  initSettings();
   initEventForm();
   initDeleteEvents();
   displayTimeNow();
