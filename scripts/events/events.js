@@ -1,9 +1,9 @@
 import { getItem, setItem } from '../common/storage.js';
 import { openPopup, closePopup } from '../common/popup.js';
 import { getStartOfWeek } from '../common/time.utils.js';
+import { deleteEvent, getEvents, getEvent } from './gateway.js';
 
-
- const removeEventsFromCalendar = () => {
+const removeEventsFromCalendar = () => {
   document.querySelectorAll('.event').forEach((e) => e.remove());
 };
 
@@ -55,49 +55,56 @@ const createEventElement = (event) => {
 };
 
 export const renderEvents = () => {
-    removeEventsFromCalendar();
-
-  const eventsArray = getItem('events');
+  removeEventsFromCalendar();
   const displayedWeekStart = new Date(getItem('displayedWeekStart'));
 
-  eventsArray
-    .filter(
-      (event) =>
-        getStartOfWeek(event.end).getDate() === displayedWeekStart.getDate()
-    )
-    .forEach((event) => {
-      const selectedTimeSlotElem = document
-        .querySelector(
-          `.calendar__day[data-day="${new Date(event.start).getDate()}"]`
+  getEvents()
+    .then((eventsArray) => {
+      eventsArray
+        .filter(
+          (event) =>
+            getStartOfWeek(event.end).getDate() === displayedWeekStart.getDate()
         )
-        .querySelector(
-          `.calendar__time-slot[data-time="${new Date(
-            event.start
-          ).getHours()}"]`
-        );
-      selectedTimeSlotElem.appendChild(createEventElement(event));
-    });
+        .forEach((event) => {
+          const selectedTimeSlotElem = document
+            .querySelector(
+              `.calendar__day[data-day="${new Date(event.start).getDate()}"]`
+            )
+            .querySelector(
+              `.calendar__time-slot[data-time="${new Date(
+                event.start
+              ).getHours()}"]`
+            );
+          selectedTimeSlotElem.appendChild(createEventElement(event));
+        });
+    })
+    .catch(() => alert('Internal Server Error'));
 };
 
-const isTimeToDelete = (eventStartDate) =>
-  Math.abs(eventStartDate - new Date()) > 15 * 60 * 1000;
+const isTimeToDelete = async (id) => {
+  const event = await getEvent(id);
+  return Math.abs(event.start - new Date()) > 15 * 60 * 1000;
+};
 
 function onDeleteEvent() {
-  const filteredEventsArray = getItem('events').filter((event) => {
-    const eventStartDate = new Date(event.start);
-    if (
-      event.id === +getItem('eventIdToDelete') &&
-      isTimeToDelete(eventStartDate)
-    ) {
-      return false;
-    }
-    return true;
-  });
+  const eventIdToDelete = getItem('eventIdToDelete');
 
-  setItem('events', filteredEventsArray);
-  setItem('eventIdToDelete', null);
-  closePopup();
-  renderEvents();
+  if (isTimeToDelete(eventIdToDelete)) {
+    deleteEvent(eventIdToDelete)
+      .then((res) => {
+        if (res.ok) {
+          renderEvents();
+          closePopup();
+        } else {
+          throw new Error();
+        }
+      })
+      .catch(() => alert('Internal Server Error'))
+
+      .finally(() => {
+        setItem('eventIdToDelete', null);
+      });
+  }
 }
 
 export function initDeleteEvents() {
