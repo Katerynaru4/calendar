@@ -1,7 +1,8 @@
-import { getItem, setItem } from '../common/storage.js';
+import { getItem } from '../common/storage.js';
 import { renderEvents } from './events.js';
 import { getDateTime } from '../common/time.utils.js';
 import { closeModal, openModal } from '../common/modal.js';
+import { createEvent } from '../events/gateway.js';
 
 const eventFormElem = document.querySelector('.event-form');
 const closeEventFormBtn = document.querySelector('.create-event__close-btn');
@@ -58,12 +59,16 @@ function onCreateEvent(event) {
     start: new Date(`${formData.date}T${formData.startTime}`),
     end: new Date(`${formData.date}T${formData.endTime}`),
   };
-  const events = getItem('events');
-  events.push(eventToAdd);
-  setItem('events', events);
-
-  onCloseEventForm()
-  renderEvents();
+  createEvent(eventToAdd)
+    .then((res) => {
+      if (res.ok) {
+        renderEvents();
+      } else {
+        throw new Error();
+      }
+    })
+    .catch(() => alert('Internal Server Error'))
+    .finally(() => onCloseEventForm());
 }
 
 export function initEventForm() {
