@@ -83,21 +83,20 @@ function onDeleteEvent(eventIdToDelete) {
       return Math.abs(new Date(eventData.start) - new Date()) > 15 * 60 * 1000;
     })
     .then((deletingValidateValue) => {
-      if (!deletingValidateValue) {
+      if (!deletingValidateValue)
         alert(
           'You cannot delete an event earlier than 15 minutes before the start'
         );
-      } else {
-        deleteEvent(eventIdToDelete)
-          .then((res) => {
-            if (res.ok) {
-              renderEvents();
-            } else {
-              throw new Error();
-            }
-          })
-          .catch(() => alert('Internal Server Error'));
-      }
+
+      deleteEvent(eventIdToDelete)
+        .then((res) => {
+          if (res.ok) {
+            renderEvents();
+          } else {
+            throw new Error();
+          }
+        })
+        .catch(() => alert('Internal Server Error'));
     })
     .finally(closePopup);
 }
