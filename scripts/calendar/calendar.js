@@ -2,7 +2,7 @@ import { getItem } from '../common/storage.js';
 import { generateWeekRange } from '../common/time.utils.js';
 import { renderEvents } from '../events/events.js';
 import { createNumbersArray } from '../common/createNumbersArray.js';
-import { displayTimeNow } from './timeNow.js';
+import { displayRedLine } from './timeNow.js';
 
 const generateDay = () =>
   createNumbersArray(0, 23)
@@ -24,6 +24,6 @@ export const renderWeek = () => {
     )
     .join('');
   renderEvents();
-  displayTimeNow();
-  setInterval(displayTimeNow, 60000);
+  displayRedLine();
+  setInterval(displayRedLine, 60000);
 };

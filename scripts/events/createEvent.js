@@ -53,12 +53,12 @@ function onCreateEvent(event) {
   if (errorMessages.length !== 0) return;
 
   const eventToAdd = {
-    id: Math.random(),
     title: formData.title,
     description: formData.description,
     start: new Date(`${formData.date}T${formData.startTime}`),
     end: new Date(`${formData.date}T${formData.endTime}`),
   };
+
   createEvent(eventToAdd)
     .then((res) => {
       if (res.ok) {
@@ -85,9 +85,16 @@ const openModalBySlot = (event) => {
   const date = `${event.target
     .closest('.calendar__day')
     .dataset.day.padStart(2, '0')}`;
-  const month = weekStartDate.getMonth() + 1;
-  const year = weekStartDate.getFullYear();
-
+  let year = weekStartDate.getFullYear();
+  let month = weekStartDate.getMonth() + 1;
+  // изменение времени для правильного заполнения даты события
+  if (date < weekStartDate.getDate()) {
+    month += 1;
+    if (month > 12) {
+      month %= 12;
+      year += 1;
+    }
+  }
   openModal(new Date(`${year} ${month} ${date} ${hours}`));
 };
 

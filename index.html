@@ -50,9 +50,10 @@
                     <form class="event-form">
                         <input type="text" name="title" placeholder="Title" class="event-form__field input-field col s6 event-form__input" required/>
                         <div class="event-form__time-block">
+                            <i class="tiny material-icons event-form__modal-time-icon">access_time</i>
                             <input type="date" name="date" class="event-form__field  event-form__date" />
                             <input type="time" step="900" name="startTime" class="event-form__field  event-form__time " />
-                            <span>-</span>
+                            <span class="event-form__time-dash">–</span>
                             <input type="time" step="900" name="endTime" class="event-form__field event-form__time " />
                         </div>
                         <span class="event-form__time-error"></span>

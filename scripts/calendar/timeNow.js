@@ -8,7 +8,7 @@ function isDisplayedWeekNotPresent() {
   );
 }
 
-export const displayTimeNow = () => {
+export const displayRedLine = () => {
   if (isDisplayedWeekNotPresent()) return;
   const nowTimeSlot = document
     .querySelector(`.calendar__day[data-day="${new Date().getDate()}"]`)

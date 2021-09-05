@@ -1,4 +1,4 @@
-import { getItem, setItem } from '../common/storage.js';
+import { getItem } from '../common/storage.js';
 import { openPopup, closePopup } from '../common/popup.js';
 import { getStartOfWeek } from '../common/time.utils.js';
 import { deleteEvent, getEvents, getEvent } from './gateway.js';
@@ -11,10 +11,7 @@ const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.delete-event-btn');
 
 function handleEventClick(event) {
-  if (event.target.closest('.event')) {
-    openPopup(event.x, event.y);
-    setItem('eventIdToDelete', event.target.closest('.event').id);
-  }
+  openPopup(event.x, event.y);
 }
 
 function toInsertTime(start, end) {
@@ -47,7 +44,7 @@ const createEventElement = (event) => {
   eventElem.appendChild(eventTimeElem);
 
   const diffTime = (endDate - startDate) / (1000 * 60);
-  eventElem.style.height = `${diffTime}px`;
+  eventElem.style.minHeight = `${diffTime}px`;
   eventElem.style.top = `${startDate.getMinutes()}px`;
   const colorEvents = getItem('eventsColor');
   eventElem.style.backgroundColor = colorEvents;
@@ -57,7 +54,6 @@ const createEventElement = (event) => {
 export const renderEvents = () => {
   removeEventsFromCalendar();
   const displayedWeekStart = new Date(getItem('displayedWeekStart'));
-
   getEvents()
     .then((eventsArray) => {
       eventsArray
@@ -81,33 +77,36 @@ export const renderEvents = () => {
     .catch(() => alert('Internal Server Error'));
 };
 
-const isTimeToDelete = async (id) => {
-  const event = await getEvent(id);
-  return Math.abs(event.start - new Date()) > 15 * 60 * 1000;
-};
-
-function onDeleteEvent() {
-  const eventIdToDelete = getItem('eventIdToDelete');
-
-  if (isTimeToDelete(eventIdToDelete)) {
-    deleteEvent(eventIdToDelete)
-      .then((res) => {
-        if (res.ok) {
-          renderEvents();
-          closePopup();
-        } else {
-          throw new Error();
-        }
-      })
-      .catch(() => alert('Internal Server Error'))
-
-      .finally(() => {
-        setItem('eventIdToDelete', null);
-      });
-  }
+function onDeleteEvent(eventIdToDelete) {
+  getEvent(eventIdToDelete)
+    .then((eventData) => {
+      return Math.abs(new Date(eventData.start) - new Date()) > 15 * 60 * 1000;
+    })
+    .then((deletingValidateValue) => {
+      if (!deletingValidateValue) {
+        alert(
+          'You cannot delete an event earlier than 15 minutes before the start'
+        );
+      } else {
+        deleteEvent(eventIdToDelete)
+          .then((res) => {
+            if (res.ok) {
+              renderEvents();
+            } else {
+              throw new Error();
+            }
+          })
+          .catch(() => alert('Internal Server Error'));
+      }
+    })
+    .finally(closePopup);
 }
 
 export function initDeleteEvents() {
-  deleteEventBtn.addEventListener('click', onDeleteEvent);
-  weekElem.addEventListener('click', handleEventClick);
+  weekElem.addEventListener('click', (event) => {
+    if (!event.target.closest('.event')) return;
+    handleEventClick(event);
+    deleteEventBtn.onclick = () =>
+      onDeleteEvent(event.target.closest('.event').id);
+  });
 }

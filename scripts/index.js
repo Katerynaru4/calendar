@@ -3,7 +3,7 @@ import { renderWeek } from './calendar/calendar.js';
 import { renderHeader } from './calendar/header.js';
 import { initNavigation, renderCurrentMonth } from './header/navigation.js';
 import { setItem, getItem } from './common/storage.js';
-import { displayTimeNow } from './calendar/timeNow.js';
+import { displayRedLine } from './calendar/timeNow.js';
 import { getStartOfWeek } from './common/time.utils.js';
 import { initEventForm } from './events/createEvent.js';
 import { renderEvents } from './events/events.js';
@@ -17,14 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     getItem('displayedWeekStart') || getStartOfWeek(new Date())
   );
   setItem('eventsColor', getItem('eventsColor') || 'blue');
-  setItem('events', getItem('events') || []);
   renderWeek();
   renderHeader();
   initNavigation();
   initSettings();
   initEventForm();
   initDeleteEvents();
-  displayTimeNow();
+  displayRedLine();
 });
 
 const onStorageChange = (e) => {
