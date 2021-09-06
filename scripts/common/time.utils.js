@@ -30,6 +30,8 @@ export const getDateTime = (date, time) => {
   return withMinutes;
 };
 
+export const daysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
 const monthsNames = [
   'Jan',
   'Feb',
